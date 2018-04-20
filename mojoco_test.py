@@ -46,7 +46,7 @@ for i in range(0,NUM_GUYS):
 while True:
 
         for i in range(0,NUM_GUYS):
-            threads[i] = threading.Thread(target=run_guy, args=(guys_params[i], envs[i]))
+            threads[i] = threading.Thread(target=run_guy, args=(envs[i]),guys_params[i]))
             threads[i].start()
 
         for i in range(0,NUM_GUYS):
