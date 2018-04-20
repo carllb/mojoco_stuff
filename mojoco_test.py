@@ -47,6 +47,7 @@ while True:
 
         for i in range(0,NUM_GUYS):
             threads[i] = threading.Thread(target=run_guy, args=(guys_params[i], envs[i]))
+            threads[i].start()
 
         for i in range(0,NUM_GUYS):
             rewards[i] = threads[i].join()
