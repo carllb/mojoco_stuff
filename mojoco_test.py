@@ -33,9 +33,9 @@ def run_guy(env,params):
 def mutate(params,rate):
     return params*(1-rate) + np.random.rand(*params.shape)*rate
 
-guys_params = [None] * 5
-envs        = [None] * 5
-threads     = [None] * 5
+guys_params = [None] * NUM_GUYS
+envs        = [None] * NUM_GUYS
+threads     = [None] * NUM_GUYS
 rewards     = np.zeros(NUM_GUYS)
 for i in range(0,NUM_GUYS):
     guys_params[i] = np.random.rand(8,111)
