@@ -1,6 +1,7 @@
 import gym
 import numpy as np
 import qcartpole_template
+import threading
 
 env = gym.make('Ant-v1')
 observation = env.reset()
@@ -14,32 +15,47 @@ best_policy = policy
 
 a = 0.1
 b = 0.9
+rate = 0.5
 
 it = 0.0
 
+NUM_GUYS = 8
+
+def run_guy(env,params):
+    total_reward = 0
+    ob = env.reset()
+    for i in range(1,100):
+        observation, reward, done, info = env.step(action)
+        total_reward += reward
+        if done:
+            break
+    return total_reward
+
+def mutate(params,rate):
+    return params*(1-rate) + np.random.rand(*params.shape)*rate
+
+guys_params = np.zeros(NUM_GUYS)
+envs        = np.zeros(NUM_GUYS)
+threads     = np.zeros(NUM_GUYS)
+rewards     = np.zeros(NUM_GYUS)
+for i in range(0,NUM_GUYS):
+    guys[i] = np.random.rand(8,111)
+    envs[i] = env = gym.make('Ant-v1')
+
+
+
 while True:
-        total_reward = 0
-        policy = a * best_policy + a * np.random.rand(8,111)
-        observation = env.reset()
-        for i in range(1,100 + int(it)):
-                #env.render()
-                action = policy * observation
-                observation, reward, done, info = env.step(action) # take a random action
-                total_reward += reward
-                if done:
-                        break
-        if best == None:
-                best = total_reward
-                best_policy = policy
-        elif total_reward > best:
-                best = total_reward
-                best_policy = policy
-        #print (total_reward)
-        print (best)
-        a += 0.00001
-        b = 1 - a
-        it+= 0.01
-        if a > 0.9999:
-                print ("Best total reward:")
-                print (best)
-                break
+
+        for i in range(0,NUM_GUYS):
+            threads[i] = threading.Thread(target=run_guy, args=(guys[i], envs[i]))
+
+        for i in range(0,NUM_GUYS):
+            rewards[i] = threads[i].join()
+
+        max_i = np.argmax(rewards)
+        print ("Best reward:")
+        print (max_i)
+
+        guys_params[0] = guys_params[max_i]
+        for i in range(1,NUM_GUYS):
+            guys_params[i] = mutate(guys_params[0],rate)
