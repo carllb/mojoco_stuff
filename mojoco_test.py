@@ -36,7 +36,7 @@ def mutate(params,rate):
 guys_params = np.zeros(NUM_GUYS)
 envs        = np.zeros(NUM_GUYS)
 threads     = np.zeros(NUM_GUYS)
-rewards     = np.zeros(NUM_GYUS)
+rewards     = np.zeros(NUM_GUYS)
 for i in range(0,NUM_GUYS):
     guys[i] = np.random.rand(8,111)
     envs[i] = env = gym.make('Ant-v1')
