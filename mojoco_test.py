@@ -1,6 +1,5 @@
 import gym
 import numpy as np
-import qcartpole_template
 import threading
 
 env = gym.make('Ant-v1')
